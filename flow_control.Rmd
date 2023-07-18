@@ -5,11 +5,16 @@ output:
   pdf_document: default
 ---
 
-##R Loops and Conditionals (AKA Flow Control)
+## A note to the pedants 
+<br>  
+
+Yes, I know there are often better ways than loops to operate on data structures in `R`, however, loop syntax in `R` is similar to syntax in other programming languages so I find it better to teach the translatable thing first, then teach the weird `R` specific voodoo. Also, bye Felicia!
+
+## R Loops and Conditionals (AKA Flow Control)
 <br>  
 One of the most challenging aspects of big data analysis is performing many operations on a large data set in series. In theory this can be done, however, the amount of time and code needed to analyze some data sets is prohibitive (i.e., a data frame with 1 million rows). Luckily, most if not all programming languages have loop and conditional structures that allow us to automate the process. We will begin with a discussion on the most common loop structures in R and then move on to commonly used conditionals. 
 
-### R Loops
+### R Loops on ranges
 <br>
 Many times in our day-to-day analyses we will need to conduct a task several times. For example, if you want to determine if an ASVs in a data set vary across treatment conditions you might want to conduct a linear regression for each individual ASV vs treatment. You could do these one by one each getting its own line of code. However, this approach quickly becomes unmanageable when the number of tasks grows beyond a handful. In this situation we need a tool that will help automate these tasks. Probably the most flexible option is loops. 
 <br>  
@@ -66,4 +71,63 @@ for(Frau_Blucher in 1:5){
 
 ```
 
-All that said `i` is 
+All that said `i` is a commonly used variable. If there are nested loop structures then `j` is commonly used for the second variable. For example, let's say your PI has told you that they want a list of all possible pairs of primers you could use for sequencing.  
+
+```{r}
+my_primer1 <- c("F1", "F2", "F3", "F4")
+my_primer2 <- c("R1", "R2", "R3", "R4")
+
+for(i in my_primer1){
+  for(j in my_primer2){
+    print(paste0(i, ":", j ))
+  }
+}
+
+``` 
+
+Nested loop writing can get cumbersome and hard to read so limiting it to a few superficial levels (i.e., `i`, and `j`) is usually a good idea. Take a minute to look at, and understand, whats going on here. 
+
+### Loops with data frames and matrices
+
+Often in our work we aren't operating on simple lists or vectors, but on more complicated data structures such as data frames and matrices. When we operate on these structures there are certain tricks that can help us. We will learn some of these tricks here. First we need to generate some data.
+
+```{r}
+set.seed(731) #setting a seed will help generate reproducible data from a random function
+my_mat <- matrix(trunc(rnorm(50, mean =50, sd = 15)), nrow = 5, ncol = 10)
+
+my_mat
+
+```
+
+Now let's say we wanted to evaluate all the relationships between rows with a correlation test. We can use the `nrow` function to provide help provide a range for this task. 
+
+```{r}
+for(i in 1:nrow(my_mat)){
+  for(j in 1:nrow(my_mat)){
+    my_cor <- cor.test(my_mat[i,],my_mat[j,])
+    print(my_cor)
+  }
+}
+```
+
+After you take these data to your PI, they ask you to remove all of the auto correlations (i.e., row 1 with row 1). To do this the easy way we will need to leverage another type of flow control using an `if` statement. 
+
+The `if` statement evaluates whether your query is `TRUE` or `FALSE`. In our example above we could use an if statement to solve our problem. 
+
+
+```{r}
+for(i in 1:nrow(my_mat)){
+  for(j in 1:nrow(my_mat)){
+    if(j > i){
+    my_cor <- cor.test(my_mat[i,],my_mat[j,])
+    print(my_cor)
+    }
+  }
+}
+```
+No more auto
+## Code
+
+Code found here: 
+
+https://github.com/chrisgaulke/r_training_gaulke_lab

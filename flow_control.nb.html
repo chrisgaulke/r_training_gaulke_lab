@@ -1752,7 +1752,18 @@ display: none;
 
 
 <!-- rnb-text-begin -->
-<p>##R Loops and Conditionals (AKA Flow Control) <br><br />
+<div id="a-note-to-the-pedants" class="section level2">
+<h2>A note to the pedants</h2>
+<p><br></p>
+<p>Yes, I know there are often better ways than loops to operate on data
+structures in <code>R</code>, however, loop syntax in <code>R</code> is
+similar to syntax in other programming languages so I find it better to
+teach the translatable thing first, then teach the weird <code>R</code>
+specific voodoo. Also, bye Felicia!</p>
+</div>
+<div id="r-loops-and-conditionals-aka-flow-control" class="section level2">
+<h2>R Loops and Conditionals (AKA Flow Control)</h2>
+<p><br><br />
 One of the most challenging aspects of big data analysis is performing
 many operations on a large data set in series. In theory this can be
 done, however, the amount of time and code needed to analyze some data
@@ -1761,8 +1772,8 @@ most if not all programming languages have loop and conditional
 structures that allow us to automate the process. We will begin with a
 discussion on the most common loop structures in R and then move on to
 commonly used conditionals.</p>
-<div id="r-loops" class="section level3">
-<h3>R Loops</h3>
+<div id="r-loops-on-ranges" class="section level3">
+<h3>R Loops on ranges</h3>
 <p><br> Many times in our day-to-day analyses we will need to conduct a
 task several times. For example, if you want to determine if an ASVs in
 a data set vary across treatment conditions you might want to conduct a
@@ -1867,8 +1878,8 @@ for(x in 1:5){
 [1] 1 2 3 4 5
 [1] 1 2 3 4 5</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCAjIHNlZSB4IGhhcyBub3cgYmVlbiByZXBsYWNlZFxuYGBgIn0= -->
-<pre class="r"><code>x # see x has now been replaced</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCBcbmBgYCJ9 -->
+<pre class="r"><code>x </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDVcbiJ9 -->
 <pre><code>[1] 5</code></pre>
@@ -1901,11 +1912,539 @@ for(Frau_Blucher in 1:5){
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>All that said <code>i</code> is</p>
+<p>All that said <code>i</code> is a commonly used variable. If there
+are nested loop structures then <code>j</code> is commonly used for the
+second variable. For example, let’s say your PI has told you that they
+want a list of all possible pairs of primers you could use for
+sequencing.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXlfcHJpbWVyMSA8LSBjKFwiRjFcIiwgXCJGMlwiLCBcIkYzXCIsIFwiRjRcIilcbm15X3ByaW1lcjIgPC0gYyhcIlIxXCIsIFwiUjJcIiwgXCJSM1wiLCBcIlI0XCIpXG5cbmZvcihpIGluIG15X3ByaW1lcjEpe1xuICBmb3IoaiBpbiBteV9wcmltZXIyKXtcbiAgICBwcmludChwYXN0ZTAoaSwgXCI6XCIsIGogKSlcbiAgfVxufVxuYGBgIn0= -->
+<pre class="r"><code>my_primer1 &lt;- c(&quot;F1&quot;, &quot;F2&quot;, &quot;F3&quot;, &quot;F4&quot;)
+my_primer2 &lt;- c(&quot;R1&quot;, &quot;R2&quot;, &quot;R3&quot;, &quot;R4&quot;)
+
+for(i in my_primer1){
+  for(j in my_primer2){
+    print(paste0(i, &quot;:&quot;, j ))
+  }
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiRjE6UjFcIlxuWzFdIFwiRjE6UjJcIlxuWzFdIFwiRjE6UjNcIlxuWzFdIFwiRjE6UjRcIlxuWzFdIFwiRjI6UjFcIlxuWzFdIFwiRjI6UjJcIlxuWzFdIFwiRjI6UjNcIlxuWzFdIFwiRjI6UjRcIlxuWzFdIFwiRjM6UjFcIlxuWzFdIFwiRjM6UjJcIlxuWzFdIFwiRjM6UjNcIlxuWzFdIFwiRjM6UjRcIlxuWzFdIFwiRjQ6UjFcIlxuWzFdIFwiRjQ6UjJcIlxuWzFdIFwiRjQ6UjNcIlxuWzFdIFwiRjQ6UjRcIlxuIn0= -->
+<pre><code>[1] &quot;F1:R1&quot;
+[1] &quot;F1:R2&quot;
+[1] &quot;F1:R3&quot;
+[1] &quot;F1:R4&quot;
+[1] &quot;F2:R1&quot;
+[1] &quot;F2:R2&quot;
+[1] &quot;F2:R3&quot;
+[1] &quot;F2:R4&quot;
+[1] &quot;F3:R1&quot;
+[1] &quot;F3:R2&quot;
+[1] &quot;F3:R3&quot;
+[1] &quot;F3:R4&quot;
+[1] &quot;F4:R1&quot;
+[1] &quot;F4:R2&quot;
+[1] &quot;F4:R3&quot;
+[1] &quot;F4:R4&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Nested loop writing can get cumbersome and hard to read so limiting
+it to a few superficial levels (i.e., <code>i</code>, and
+<code>j</code>) is usually a good idea. Take a minute to look at, and
+understand, whats going on here.</p>
+</div>
+<div id="loops-with-data-frames-and-matrices" class="section level3">
+<h3>Loops with data frames and matrices</h3>
+<p>Often in our work we aren’t operating on simple lists or vectors, but
+on more complicated data structures such as data frames and matrices.
+When we operate on these structures there are certain tricks that can
+help us. We will learn some of these tricks here. First we need to
+generate some data.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0LnNlZWQoNzMxKSAjc2V0dGluZyBhIHNlZWQgd2lsbCBoZWxwIGdlbmVyYXRlIHJlcHJvZHVjaWJsZSBkYXRhIGZyb20gYSByYW5kb20gZnVuY3Rpb25cbm15X21hdCA8LSBtYXRyaXgodHJ1bmMocm5vcm0oNTAsIG1lYW4gPTUwLCBzZCA9IDE1KSksIG5yb3cgPSA1LCBuY29sID0gMTApXG5cbm15X21hdFxuYGBgIn0= -->
+<pre class="r"><code>set.seed(731) #setting a seed will help generate reproducible data from a random function
+my_mat &lt;- matrix(trunc(rnorm(50, mean =50, sd = 15)), nrow = 5, ncol = 10)
+
+my_mat</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICBbLDFdIFssMl0gWywzXSBbLDRdIFssNV0gWyw2XSBbLDddIFssOF0gWyw5XSBbLDEwXVxuWzEsXSAgIDYzICAgNDUgICA2MCAgIDEyICAgMzggICAzMyAgIDYzICAgNDAgICA0NSAgICAgOVxuWzIsXSAgIDQwICAgNjQgICA1MyAgICAxICAgNDEgICA3MiAgIDQ5ICAgNDYgICA2MCAgICA2N1xuWzMsXSAgIDU2ICAgMzEgICA1OCAgIDc5ICAgNDQgICA2MiAgIDYwICAgMjMgICA2OCAgICA0N1xuWzQsXSAgIDU3ICAgNjIgICA0MSAgIDU2ICAgNDQgICA2NSAgIDIzICAgMzMgICA1NiAgICAyOVxuWzUsXSAgIDUzICAgODEgICA1MSAgIDU0ICAgNTggICA0MSAgIDU0ICAgNTQgICAyMSAgICA2OVxuIn0= -->
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+[1,]   63   45   60   12   38   33   63   40   45     9
+[2,]   40   64   53    1   41   72   49   46   60    67
+[3,]   56   31   58   79   44   62   60   23   68    47
+[4,]   57   62   41   56   44   65   23   33   56    29
+[5,]   53   81   51   54   58   41   54   54   21    69</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now let’s say we wanted to evaluate all the relationships between
+rows with a correlation test. We can use the <code>nrow</code> function
+to provide help provide a range for this task.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yKGkgaW4gMTpucm93KG15X21hdCkpe1xuICBmb3IoaiBpbiAxOm5yb3cobXlfbWF0KSl7XG4gICAgbXlfY29yIDwtIGNvci50ZXN0KG15X21hdFtpLF0sbXlfbWF0W2osXSlcbiAgICBwcmludChteV9jb3IpXG4gIH1cbn1cbmBgYCJ9 -->
+<pre class="r"><code>for(i in 1:nrow(my_mat)){
+  for(j in 1:nrow(my_mat)){
+    my_cor &lt;- cor.test(my_mat[i,],my_mat[j,])
+    print(my_cor)
+  }
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gSW5mLCBkZiA9IDgsIHAtdmFsdWUgPCAyLjJlLTE2XG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gMSAxXG5zYW1wbGUgZXN0aW1hdGVzOlxuY29yIFxuICAxIFxuXG5cblx0UGVhcnNvbidzIHByb2R1Y3QtbW9tZW50IGNvcnJlbGF0aW9uXG5cbmRhdGE6ICBteV9tYXRbaSwgXSBhbmQgbXlfbWF0W2osIF1cbnQgPSAwLjUzMDQzLCBkZiA9IDgsIHAtdmFsdWUgPSAwLjYxMDJcbmFsdGVybmF0aXZlIGh5cG90aGVzaXM6IHRydWUgY29ycmVsYXRpb24gaXMgbm90IGVxdWFsIHRvIDBcbjk1IHBlcmNlbnQgY29uZmlkZW5jZSBpbnRlcnZhbDpcbiAtMC41MDM3Njg5ICAwLjcyOTMwODlcbnNhbXBsZSBlc3RpbWF0ZXM6XG4gICAgICBjb3IgXG4wLjE4NDMyMTcgXG5cblxuXHRQZWFyc29uJ3MgcHJvZHVjdC1tb21lbnQgY29ycmVsYXRpb25cblxuZGF0YTogIG15X21hdFtpLCBdIGFuZCBteV9tYXRbaiwgXVxudCA9IC0wLjI4MzcyLCBkZiA9IDgsIHAtdmFsdWUgPSAwLjc4MzhcbmFsdGVybmF0aXZlIGh5cG90aGVzaXM6IHRydWUgY29ycmVsYXRpb24gaXMgbm90IGVxdWFsIHRvIDBcbjk1IHBlcmNlbnQgY29uZmlkZW5jZSBpbnRlcnZhbDpcbiAtMC42ODYzMDY0ICAwLjU2NTM0NDZcbnNhbXBsZSBlc3RpbWF0ZXM6XG4gICAgICAgIGNvciBcbi0wLjA5OTgwOTQxIFxuXG5cblx0UGVhcnNvbidzIHByb2R1Y3QtbW9tZW50IGNvcnJlbGF0aW9uXG5cbmRhdGE6ICBteV9tYXRbaSwgXSBhbmQgbXlfbWF0W2osIF1cbnQgPSAtMC4xNDgyNywgZGYgPSA4LCBwLXZhbHVlID0gMC44ODU4XG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gLTAuNjYwMjE0MiAgMC41OTY5NTMzXG5zYW1wbGUgZXN0aW1hdGVzOlxuICAgICAgICBjb3IgXG4tMC4wNTIzNDg2NiBcblxuXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gLTAuNTIwNjcsIGRmID0gOCwgcC12YWx1ZSA9IDAuNjE2N1xuYWx0ZXJuYXRpdmUgaHlwb3RoZXNpczogdHJ1ZSBjb3JyZWxhdGlvbiBpcyBub3QgZXF1YWwgdG8gMFxuOTUgcGVyY2VudCBjb25maWRlbmNlIGludGVydmFsOlxuIC0wLjcyNzcxNzUgIDAuNTA2Mjk1Mlxuc2FtcGxlIGVzdGltYXRlczpcbiAgICAgICBjb3IgXG4tMC4xODEwNDM2IFxuXG5cblx0UGVhcnNvbidzIHByb2R1Y3QtbW9tZW50IGNvcnJlbGF0aW9uXG5cbmRhdGE6ICBteV9tYXRbaSwgXSBhbmQgbXlfbWF0W2osIF1cbnQgPSAwLjUzMDQzLCBkZiA9IDgsIHAtdmFsdWUgPSAwLjYxMDJcbmFsdGVybmF0aXZlIGh5cG90aGVzaXM6IHRydWUgY29ycmVsYXRpb24gaXMgbm90IGVxdWFsIHRvIDBcbjk1IHBlcmNlbnQgY29uZmlkZW5jZSBpbnRlcnZhbDpcbiAtMC41MDM3Njg5ICAwLjcyOTMwODlcbnNhbXBsZSBlc3RpbWF0ZXM6XG4gICAgICBjb3IgXG4wLjE4NDMyMTcgXG5cblxuXHRQZWFyc29uJ3MgcHJvZHVjdC1tb21lbnQgY29ycmVsYXRpb25cblxuZGF0YTogIG15X21hdFtpLCBdIGFuZCBteV9tYXRbaiwgXVxudCA9IEluZiwgZGYgPSA4LCBwLXZhbHVlIDwgMi4yZS0xNlxuYWx0ZXJuYXRpdmUgaHlwb3RoZXNpczogdHJ1ZSBjb3JyZWxhdGlvbiBpcyBub3QgZXF1YWwgdG8gMFxuOTUgcGVyY2VudCBjb25maWRlbmNlIGludGVydmFsOlxuIDEgMVxuc2FtcGxlIGVzdGltYXRlczpcbmNvciBcbiAgMSBcblxuXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gLTEuMTUyNywgZGYgPSA4LCBwLXZhbHVlID0gMC4yODIzXG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gLTAuODEzNjgwOCAgMC4zMzA4MzY2XG5zYW1wbGUgZXN0aW1hdGVzOlxuICAgICAgIGNvciBcbi0wLjM3NzQwNDMgXG5cblxuXHRQZWFyc29uJ3MgcHJvZHVjdC1tb21lbnQgY29ycmVsYXRpb25cblxuZGF0YTogIG15X21hdFtpLCBdIGFuZCBteV9tYXRbaiwgXVxudCA9IC0wLjA2ODUwNiwgZGYgPSA4LCBwLXZhbHVlID0gMC45NDcxXG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gLTAuNjQ0MDIxMyAgMC42MTQ3ODU1XG5zYW1wbGUgZXN0aW1hdGVzOlxuICAgICAgICBjb3IgXG4tMC4wMjQyMTM0MSBcblxuXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gLTAuMDIwNTMsIGRmID0gOCwgcC12YWx1ZSA9IDAuOTg0MVxuYWx0ZXJuYXRpdmUgaHlwb3RoZXNpczogdHJ1ZSBjb3JyZWxhdGlvbiBpcyBub3QgZXF1YWwgdG8gMFxuOTUgcGVyY2VudCBjb25maWRlbmNlIGludGVydmFsOlxuIC0wLjYzMzk4NzIgIDAuNjI1MjI1M1xuc2FtcGxlIGVzdGltYXRlczpcbiAgICAgICAgY29yIFxuLTAuMDA3MjU4MjQgXG5cblxuXHRQZWFyc29uJ3MgcHJvZHVjdC1tb21lbnQgY29ycmVsYXRpb25cblxuZGF0YTogIG15X21hdFtpLCBdIGFuZCBteV9tYXRbaiwgXVxudCA9IC0wLjI4MzcyLCBkZiA9IDgsIHAtdmFsdWUgPSAwLjc4MzhcbmFsdGVybmF0aXZlIGh5cG90aGVzaXM6IHRydWUgY29ycmVsYXRpb24gaXMgbm90IGVxdWFsIHRvIDBcbjk1IHBlcmNlbnQgY29uZmlkZW5jZSBpbnRlcnZhbDpcbiAtMC42ODYzMDY0ICAwLjU2NTM0NDZcbnNhbXBsZSBlc3RpbWF0ZXM6XG4gICAgICAgIGNvciBcbi0wLjA5OTgwOTQxIFxuXG5cblx0UGVhcnNvbidzIHByb2R1Y3QtbW9tZW50IGNvcnJlbGF0aW9uXG5cbmRhdGE6ICBteV9tYXRbaSwgXSBhbmQgbXlfbWF0W2osIF1cbnQgPSAtMS4xNTI3LCBkZiA9IDgsIHAtdmFsdWUgPSAwLjI4MjNcbmFsdGVybmF0aXZlIGh5cG90aGVzaXM6IHRydWUgY29ycmVsYXRpb24gaXMgbm90IGVxdWFsIHRvIDBcbjk1IHBlcmNlbnQgY29uZmlkZW5jZSBpbnRlcnZhbDpcbiAtMC44MTM2ODA4ICAwLjMzMDgzNjZcbnNhbXBsZSBlc3RpbWF0ZXM6XG4gICAgICAgY29yIFxuLTAuMzc3NDA0MyBcblxuXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gSW5mLCBkZiA9IDgsIHAtdmFsdWUgPCAyLjJlLTE2XG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gMSAxXG5zYW1wbGUgZXN0aW1hdGVzOlxuY29yIFxuICAxIFxuXG5cblx0UGVhcnNvbidzIHByb2R1Y3QtbW9tZW50IGNvcnJlbGF0aW9uXG5cbmRhdGE6ICBteV9tYXRbaSwgXSBhbmQgbXlfbWF0W2osIF1cbnQgPSAwLjc2OTQ1LCBkZiA9IDgsIHAtdmFsdWUgPSAwLjQ2MzdcbmFsdGVybmF0aXZlIGh5cG90aGVzaXM6IHRydWUgY29ycmVsYXRpb24gaXMgbm90IGVxdWFsIHRvIDBcbjk1IHBlcmNlbnQgY29uZmlkZW5jZSBpbnRlcnZhbDpcbiAtMC40Mzk4MTc4ICAwLjc2NTU5MThcbnNhbXBsZSBlc3RpbWF0ZXM6XG4gICAgICBjb3IgXG4wLjI2MjUwMDMgXG5cblxuXHRQZWFyc29uJ3MgcHJvZHVjdC1tb21lbnQgY29ycmVsYXRpb25cblxuZGF0YTogIG15X21hdFtpLCBdIGFuZCBteV9tYXRbaiwgXVxudCA9IC0xLjkzMTQsIGRmID0gOCwgcC12YWx1ZSA9IDAuMDg5NTJcbmFsdGVybmF0aXZlIGh5cG90aGVzaXM6IHRydWUgY29ycmVsYXRpb24gaXMgbm90IGVxdWFsIHRvIDBcbjk1IHBlcmNlbnQgY29uZmlkZW5jZSBpbnRlcnZhbDpcbiAtMC44ODA4MDk2ICAwLjEwMTg3MTRcbnNhbXBsZSBlc3RpbWF0ZXM6XG4gICAgICAgY29yIFxuLTAuNTYzOTI1NiBcblxuXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gLTAuMTQ4MjcsIGRmID0gOCwgcC12YWx1ZSA9IDAuODg1OFxuYWx0ZXJuYXRpdmUgaHlwb3RoZXNpczogdHJ1ZSBjb3JyZWxhdGlvbiBpcyBub3QgZXF1YWwgdG8gMFxuOTUgcGVyY2VudCBjb25maWRlbmNlIGludGVydmFsOlxuIC0wLjY2MDIxNDIgIDAuNTk2OTUzM1xuc2FtcGxlIGVzdGltYXRlczpcbiAgICAgICAgY29yIFxuLTAuMDUyMzQ4NjYgXG5cblxuXHRQZWFyc29uJ3MgcHJvZHVjdC1tb21lbnQgY29ycmVsYXRpb25cblxuZGF0YTogIG15X21hdFtpLCBdIGFuZCBteV9tYXRbaiwgXVxudCA9IC0wLjA2ODUwNiwgZGYgPSA4LCBwLXZhbHVlID0gMC45NDcxXG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gLTAuNjQ0MDIxMyAgMC42MTQ3ODU1XG5zYW1wbGUgZXN0aW1hdGVzOlxuICAgICAgICBjb3IgXG4tMC4wMjQyMTM0MSBcblxuXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gMC43Njk0NSwgZGYgPSA4LCBwLXZhbHVlID0gMC40NjM3XG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gLTAuNDM5ODE3OCAgMC43NjU1OTE4XG5zYW1wbGUgZXN0aW1hdGVzOlxuICAgICAgY29yIFxuMC4yNjI1MDAzIFxuXG5cblx0UGVhcnNvbidzIHByb2R1Y3QtbW9tZW50IGNvcnJlbGF0aW9uXG5cbmRhdGE6ICBteV9tYXRbaSwgXSBhbmQgbXlfbWF0W2osIF1cbnQgPSBJbmYsIGRmID0gOCwgcC12YWx1ZSA8IDIuMmUtMTZcbmFsdGVybmF0aXZlIGh5cG90aGVzaXM6IHRydWUgY29ycmVsYXRpb24gaXMgbm90IGVxdWFsIHRvIDBcbjk1IHBlcmNlbnQgY29uZmlkZW5jZSBpbnRlcnZhbDpcbiAxIDFcbnNhbXBsZSBlc3RpbWF0ZXM6XG5jb3IgXG4gIDEgXG5cblxuXHRQZWFyc29uJ3MgcHJvZHVjdC1tb21lbnQgY29ycmVsYXRpb25cblxuZGF0YTogIG15X21hdFtpLCBdIGFuZCBteV9tYXRbaiwgXVxudCA9IC0wLjU1NDIyLCBkZiA9IDgsIHAtdmFsdWUgPSAwLjU5NDZcbmFsdGVybmF0aXZlIGh5cG90aGVzaXM6IHRydWUgY29ycmVsYXRpb24gaXMgbm90IGVxdWFsIHRvIDBcbjk1IHBlcmNlbnQgY29uZmlkZW5jZSBpbnRlcnZhbDpcbiAtMC43MzMxNTMwICAwLjQ5NzU3ODRcbnNhbXBsZSBlc3RpbWF0ZXM6XG4gICAgICAgY29yIFxuLTAuMTkyMjkwMiBcblxuXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gLTAuNTIwNjcsIGRmID0gOCwgcC12YWx1ZSA9IDAuNjE2N1xuYWx0ZXJuYXRpdmUgaHlwb3RoZXNpczogdHJ1ZSBjb3JyZWxhdGlvbiBpcyBub3QgZXF1YWwgdG8gMFxuOTUgcGVyY2VudCBjb25maWRlbmNlIGludGVydmFsOlxuIC0wLjcyNzcxNzUgIDAuNTA2Mjk1Mlxuc2FtcGxlIGVzdGltYXRlczpcbiAgICAgICBjb3IgXG4tMC4xODEwNDM2IFxuXG5cblx0UGVhcnNvbidzIHByb2R1Y3QtbW9tZW50IGNvcnJlbGF0aW9uXG5cbmRhdGE6ICBteV9tYXRbaSwgXSBhbmQgbXlfbWF0W2osIF1cbnQgPSAtMC4wMjA1MywgZGYgPSA4LCBwLXZhbHVlID0gMC45ODQxXG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gLTAuNjMzOTg3MiAgMC42MjUyMjUzXG5zYW1wbGUgZXN0aW1hdGVzOlxuICAgICAgICBjb3IgXG4tMC4wMDcyNTgyNCBcblxuXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gLTEuOTMxNCwgZGYgPSA4LCBwLXZhbHVlID0gMC4wODk1MlxuYWx0ZXJuYXRpdmUgaHlwb3RoZXNpczogdHJ1ZSBjb3JyZWxhdGlvbiBpcyBub3QgZXF1YWwgdG8gMFxuOTUgcGVyY2VudCBjb25maWRlbmNlIGludGVydmFsOlxuIC0wLjg4MDgwOTYgIDAuMTAxODcxNFxuc2FtcGxlIGVzdGltYXRlczpcbiAgICAgICBjb3IgXG4tMC41NjM5MjU2IFxuXG5cblx0UGVhcnNvbidzIHByb2R1Y3QtbW9tZW50IGNvcnJlbGF0aW9uXG5cbmRhdGE6ICBteV9tYXRbaSwgXSBhbmQgbXlfbWF0W2osIF1cbnQgPSAtMC41NTQyMiwgZGYgPSA4LCBwLXZhbHVlID0gMC41OTQ2XG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gLTAuNzMzMTUzMCAgMC40OTc1Nzg0XG5zYW1wbGUgZXN0aW1hdGVzOlxuICAgICAgIGNvciBcbi0wLjE5MjI5MDIgXG5cblxuXHRQZWFyc29uJ3MgcHJvZHVjdC1tb21lbnQgY29ycmVsYXRpb25cblxuZGF0YTogIG15X21hdFtpLCBdIGFuZCBteV9tYXRbaiwgXVxudCA9IEluZiwgZGYgPSA4LCBwLXZhbHVlIDwgMi4yZS0xNlxuYWx0ZXJuYXRpdmUgaHlwb3RoZXNpczogdHJ1ZSBjb3JyZWxhdGlvbiBpcyBub3QgZXF1YWwgdG8gMFxuOTUgcGVyY2VudCBjb25maWRlbmNlIGludGVydmFsOlxuIDEgMVxuc2FtcGxlIGVzdGltYXRlczpcbmNvciBcbiAgMSBcbiJ9 -->
+<pre><code>
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = Inf, df = 8, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 1 1
+sample estimates:
+cor 
+  1 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = 0.53043, df = 8, p-value = 0.6102
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.5037689  0.7293089
+sample estimates:
+      cor 
+0.1843217 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.28372, df = 8, p-value = 0.7838
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.6863064  0.5653446
+sample estimates:
+        cor 
+-0.09980941 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.14827, df = 8, p-value = 0.8858
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.6602142  0.5969533
+sample estimates:
+        cor 
+-0.05234866 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.52067, df = 8, p-value = 0.6167
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.7277175  0.5062952
+sample estimates:
+       cor 
+-0.1810436 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = 0.53043, df = 8, p-value = 0.6102
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.5037689  0.7293089
+sample estimates:
+      cor 
+0.1843217 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = Inf, df = 8, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 1 1
+sample estimates:
+cor 
+  1 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -1.1527, df = 8, p-value = 0.2823
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.8136808  0.3308366
+sample estimates:
+       cor 
+-0.3774043 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.068506, df = 8, p-value = 0.9471
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.6440213  0.6147855
+sample estimates:
+        cor 
+-0.02421341 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.02053, df = 8, p-value = 0.9841
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.6339872  0.6252253
+sample estimates:
+        cor 
+-0.00725824 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.28372, df = 8, p-value = 0.7838
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.6863064  0.5653446
+sample estimates:
+        cor 
+-0.09980941 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -1.1527, df = 8, p-value = 0.2823
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.8136808  0.3308366
+sample estimates:
+       cor 
+-0.3774043 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = Inf, df = 8, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 1 1
+sample estimates:
+cor 
+  1 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = 0.76945, df = 8, p-value = 0.4637
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.4398178  0.7655918
+sample estimates:
+      cor 
+0.2625003 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -1.9314, df = 8, p-value = 0.08952
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.8808096  0.1018714
+sample estimates:
+       cor 
+-0.5639256 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.14827, df = 8, p-value = 0.8858
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.6602142  0.5969533
+sample estimates:
+        cor 
+-0.05234866 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.068506, df = 8, p-value = 0.9471
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.6440213  0.6147855
+sample estimates:
+        cor 
+-0.02421341 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = 0.76945, df = 8, p-value = 0.4637
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.4398178  0.7655918
+sample estimates:
+      cor 
+0.2625003 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = Inf, df = 8, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 1 1
+sample estimates:
+cor 
+  1 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.55422, df = 8, p-value = 0.5946
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.7331530  0.4975784
+sample estimates:
+       cor 
+-0.1922902 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.52067, df = 8, p-value = 0.6167
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.7277175  0.5062952
+sample estimates:
+       cor 
+-0.1810436 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.02053, df = 8, p-value = 0.9841
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.6339872  0.6252253
+sample estimates:
+        cor 
+-0.00725824 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -1.9314, df = 8, p-value = 0.08952
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.8808096  0.1018714
+sample estimates:
+       cor 
+-0.5639256 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.55422, df = 8, p-value = 0.5946
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.7331530  0.4975784
+sample estimates:
+       cor 
+-0.1922902 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = Inf, df = 8, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 1 1
+sample estimates:
+cor 
+  1 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>After you take these data to your PI, they ask you to remove all of
+the auto correlations (i.e., row 1 with row 1). To do this the easy way
+we will need to leverage another type of flow control using an
+<code>if</code> statement.</p>
+<p>The <code>if</code> statement evaluates whether your query is
+<code>TRUE</code> or <code>FALSE</code>. In our example above we could
+use an if statement to solve our problem.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yKGkgaW4gMTpucm93KG15X21hdCkpe1xuICBmb3IoaiBpbiAxOm5yb3cobXlfbWF0KSl7XG4gICAgaWYoaiA+IGkpe1xuICAgIG15X2NvciA8LSBjb3IudGVzdChteV9tYXRbaSxdLG15X21hdFtqLF0pXG4gICAgcHJpbnQobXlfY29yKVxuICAgIH1cbiAgfVxufVxuYGBgIn0= -->
+<pre class="r"><code>for(i in 1:nrow(my_mat)){
+  for(j in 1:nrow(my_mat)){
+    if(j &gt; i){
+    my_cor &lt;- cor.test(my_mat[i,],my_mat[j,])
+    print(my_cor)
+    }
+  }
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gMC41MzA0MywgZGYgPSA4LCBwLXZhbHVlID0gMC42MTAyXG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gLTAuNTAzNzY4OSAgMC43MjkzMDg5XG5zYW1wbGUgZXN0aW1hdGVzOlxuICAgICAgY29yIFxuMC4xODQzMjE3IFxuXG5cblx0UGVhcnNvbidzIHByb2R1Y3QtbW9tZW50IGNvcnJlbGF0aW9uXG5cbmRhdGE6ICBteV9tYXRbaSwgXSBhbmQgbXlfbWF0W2osIF1cbnQgPSAtMC4yODM3MiwgZGYgPSA4LCBwLXZhbHVlID0gMC43ODM4XG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gLTAuNjg2MzA2NCAgMC41NjUzNDQ2XG5zYW1wbGUgZXN0aW1hdGVzOlxuICAgICAgICBjb3IgXG4tMC4wOTk4MDk0MSBcblxuXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gLTAuMTQ4MjcsIGRmID0gOCwgcC12YWx1ZSA9IDAuODg1OFxuYWx0ZXJuYXRpdmUgaHlwb3RoZXNpczogdHJ1ZSBjb3JyZWxhdGlvbiBpcyBub3QgZXF1YWwgdG8gMFxuOTUgcGVyY2VudCBjb25maWRlbmNlIGludGVydmFsOlxuIC0wLjY2MDIxNDIgIDAuNTk2OTUzM1xuc2FtcGxlIGVzdGltYXRlczpcbiAgICAgICAgY29yIFxuLTAuMDUyMzQ4NjYgXG5cblxuXHRQZWFyc29uJ3MgcHJvZHVjdC1tb21lbnQgY29ycmVsYXRpb25cblxuZGF0YTogIG15X21hdFtpLCBdIGFuZCBteV9tYXRbaiwgXVxudCA9IC0wLjUyMDY3LCBkZiA9IDgsIHAtdmFsdWUgPSAwLjYxNjdcbmFsdGVybmF0aXZlIGh5cG90aGVzaXM6IHRydWUgY29ycmVsYXRpb24gaXMgbm90IGVxdWFsIHRvIDBcbjk1IHBlcmNlbnQgY29uZmlkZW5jZSBpbnRlcnZhbDpcbiAtMC43Mjc3MTc1ICAwLjUwNjI5NTJcbnNhbXBsZSBlc3RpbWF0ZXM6XG4gICAgICAgY29yIFxuLTAuMTgxMDQzNiBcblxuXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gLTEuMTUyNywgZGYgPSA4LCBwLXZhbHVlID0gMC4yODIzXG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gLTAuODEzNjgwOCAgMC4zMzA4MzY2XG5zYW1wbGUgZXN0aW1hdGVzOlxuICAgICAgIGNvciBcbi0wLjM3NzQwNDMgXG5cblxuXHRQZWFyc29uJ3MgcHJvZHVjdC1tb21lbnQgY29ycmVsYXRpb25cblxuZGF0YTogIG15X21hdFtpLCBdIGFuZCBteV9tYXRbaiwgXVxudCA9IC0wLjA2ODUwNiwgZGYgPSA4LCBwLXZhbHVlID0gMC45NDcxXG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gLTAuNjQ0MDIxMyAgMC42MTQ3ODU1XG5zYW1wbGUgZXN0aW1hdGVzOlxuICAgICAgICBjb3IgXG4tMC4wMjQyMTM0MSBcblxuXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gLTAuMDIwNTMsIGRmID0gOCwgcC12YWx1ZSA9IDAuOTg0MVxuYWx0ZXJuYXRpdmUgaHlwb3RoZXNpczogdHJ1ZSBjb3JyZWxhdGlvbiBpcyBub3QgZXF1YWwgdG8gMFxuOTUgcGVyY2VudCBjb25maWRlbmNlIGludGVydmFsOlxuIC0wLjYzMzk4NzIgIDAuNjI1MjI1M1xuc2FtcGxlIGVzdGltYXRlczpcbiAgICAgICAgY29yIFxuLTAuMDA3MjU4MjQgXG5cblxuXHRQZWFyc29uJ3MgcHJvZHVjdC1tb21lbnQgY29ycmVsYXRpb25cblxuZGF0YTogIG15X21hdFtpLCBdIGFuZCBteV9tYXRbaiwgXVxudCA9IDAuNzY5NDUsIGRmID0gOCwgcC12YWx1ZSA9IDAuNDYzN1xuYWx0ZXJuYXRpdmUgaHlwb3RoZXNpczogdHJ1ZSBjb3JyZWxhdGlvbiBpcyBub3QgZXF1YWwgdG8gMFxuOTUgcGVyY2VudCBjb25maWRlbmNlIGludGVydmFsOlxuIC0wLjQzOTgxNzggIDAuNzY1NTkxOFxuc2FtcGxlIGVzdGltYXRlczpcbiAgICAgIGNvciBcbjAuMjYyNTAwMyBcblxuXG5cdFBlYXJzb24ncyBwcm9kdWN0LW1vbWVudCBjb3JyZWxhdGlvblxuXG5kYXRhOiAgbXlfbWF0W2ksIF0gYW5kIG15X21hdFtqLCBdXG50ID0gLTEuOTMxNCwgZGYgPSA4LCBwLXZhbHVlID0gMC4wODk1MlxuYWx0ZXJuYXRpdmUgaHlwb3RoZXNpczogdHJ1ZSBjb3JyZWxhdGlvbiBpcyBub3QgZXF1YWwgdG8gMFxuOTUgcGVyY2VudCBjb25maWRlbmNlIGludGVydmFsOlxuIC0wLjg4MDgwOTYgIDAuMTAxODcxNFxuc2FtcGxlIGVzdGltYXRlczpcbiAgICAgICBjb3IgXG4tMC41NjM5MjU2IFxuXG5cblx0UGVhcnNvbidzIHByb2R1Y3QtbW9tZW50IGNvcnJlbGF0aW9uXG5cbmRhdGE6ICBteV9tYXRbaSwgXSBhbmQgbXlfbWF0W2osIF1cbnQgPSAtMC41NTQyMiwgZGYgPSA4LCBwLXZhbHVlID0gMC41OTQ2XG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIGNvcnJlbGF0aW9uIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gLTAuNzMzMTUzMCAgMC40OTc1Nzg0XG5zYW1wbGUgZXN0aW1hdGVzOlxuICAgICAgIGNvciBcbi0wLjE5MjI5MDIgXG4ifQ== -->
+<pre><code>
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = 0.53043, df = 8, p-value = 0.6102
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.5037689  0.7293089
+sample estimates:
+      cor 
+0.1843217 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.28372, df = 8, p-value = 0.7838
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.6863064  0.5653446
+sample estimates:
+        cor 
+-0.09980941 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.14827, df = 8, p-value = 0.8858
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.6602142  0.5969533
+sample estimates:
+        cor 
+-0.05234866 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.52067, df = 8, p-value = 0.6167
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.7277175  0.5062952
+sample estimates:
+       cor 
+-0.1810436 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -1.1527, df = 8, p-value = 0.2823
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.8136808  0.3308366
+sample estimates:
+       cor 
+-0.3774043 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.068506, df = 8, p-value = 0.9471
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.6440213  0.6147855
+sample estimates:
+        cor 
+-0.02421341 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.02053, df = 8, p-value = 0.9841
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.6339872  0.6252253
+sample estimates:
+        cor 
+-0.00725824 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = 0.76945, df = 8, p-value = 0.4637
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.4398178  0.7655918
+sample estimates:
+      cor 
+0.2625003 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -1.9314, df = 8, p-value = 0.08952
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.8808096  0.1018714
+sample estimates:
+       cor 
+-0.5639256 
+
+
+    Pearson&#39;s product-moment correlation
+
+data:  my_mat[i, ] and my_mat[j, ]
+t = -0.55422, df = 8, p-value = 0.5946
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.7331530  0.4975784
+sample estimates:
+       cor 
+-0.1922902 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>No more auto ## Code</p>
+<p>Code found here:</p>
+<p><a href="https://github.com/chrisgaulke/r_training_gaulke_lab" class="uri">https://github.com/chrisgaulke/r_training_gaulke_lab</a></p>
 <!-- rnb-text-end -->
 </div>
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBsb29wcyBhbmQgY29uZGl0aW9uYWxzIgpvdXRwdXQ6CiAgaHRtbF9ub3RlYm9vazogZGVmYXVsdAogIHBkZl9kb2N1bWVudDogZGVmYXVsdAotLS0KCiMjUiBMb29wcyBhbmQgQ29uZGl0aW9uYWxzIChBS0EgRmxvdyBDb250cm9sKQo8YnI+ICAKT25lIG9mIHRoZSBtb3N0IGNoYWxsZW5naW5nIGFzcGVjdHMgb2YgYmlnIGRhdGEgYW5hbHlzaXMgaXMgcGVyZm9ybWluZyBtYW55IG9wZXJhdGlvbnMgb24gYSBsYXJnZSBkYXRhIHNldCBpbiBzZXJpZXMuIEluIHRoZW9yeSB0aGlzIGNhbiBiZSBkb25lLCBob3dldmVyLCB0aGUgYW1vdW50IG9mIHRpbWUgYW5kIGNvZGUgbmVlZGVkIHRvIGFuYWx5emUgc29tZSBkYXRhIHNldHMgaXMgcHJvaGliaXRpdmUgKGkuZS4sIGEgZGF0YSBmcmFtZSB3aXRoIDEgbWlsbGlvbiByb3dzKS4gTHVja2lseSwgbW9zdCBpZiBub3QgYWxsIHByb2dyYW1taW5nIGxhbmd1YWdlcyBoYXZlIGxvb3AgYW5kIGNvbmRpdGlvbmFsIHN0cnVjdHVyZXMgdGhhdCBhbGxvdyB1cyB0byBhdXRvbWF0ZSB0aGUgcHJvY2Vzcy4gV2Ugd2lsbCBiZWdpbiB3aXRoIGEgZGlzY3Vzc2lvbiBvbiB0aGUgbW9zdCBjb21tb24gbG9vcCBzdHJ1Y3R1cmVzIGluIFIgYW5kIHRoZW4gbW92ZSBvbiB0byBjb21tb25seSB1c2VkIGNvbmRpdGlvbmFscy4gCgojIyMgUiBMb29wcwo8YnI+Ck1hbnkgdGltZXMgaW4gb3VyIGRheS10by1kYXkgYW5hbHlzZXMgd2Ugd2lsbCBuZWVkIHRvIGNvbmR1Y3QgYSB0YXNrIHNldmVyYWwgdGltZXMuIEZvciBleGFtcGxlLCBpZiB5b3Ugd2FudCB0byBkZXRlcm1pbmUgaWYgYW4gQVNWcyBpbiBhIGRhdGEgc2V0IHZhcnkgYWNyb3NzIHRyZWF0bWVudCBjb25kaXRpb25zIHlvdSBtaWdodCB3YW50IHRvIGNvbmR1Y3QgYSBsaW5lYXIgcmVncmVzc2lvbiBmb3IgZWFjaCBpbmRpdmlkdWFsIEFTViB2cyB0cmVhdG1lbnQuIFlvdSBjb3VsZCBkbyB0aGVzZSBvbmUgYnkgb25lIGVhY2ggZ2V0dGluZyBpdHMgb3duIGxpbmUgb2YgY29kZS4gSG93ZXZlciwgdGhpcyBhcHByb2FjaCBxdWlja2x5IGJlY29tZXMgdW5tYW5hZ2VhYmxlIHdoZW4gdGhlIG51bWJlciBvZiB0YXNrcyBncm93cyBiZXlvbmQgYSBoYW5kZnVsLiBJbiB0aGlzIHNpdHVhdGlvbiB3ZSBuZWVkIGEgdG9vbCB0aGF0IHdpbGwgaGVscCBhdXRvbWF0ZSB0aGVzZSB0YXNrcy4gUHJvYmFibHkgdGhlIG1vc3QgZmxleGlibGUgb3B0aW9uIGlzIGxvb3BzLiAKPGJyPiAgCk9uZSBvZiB0aGUgbW9zdCBjb21tb24gbG9vcCBzdHJ1Y3R1cmVzIGluIFIgaXMgdGhlICoqKmZvcioqKiBsb29wLiBUaGlzIHR5cGUgb2YgZmxvdyBjb250cm9sIHdpbGwgaXRlcmF0ZSBvdmVyIGFuIG9iamVjdCBpdCBpcyBwcm92aWRlZCBwcmVmb3JtaW5nIHRhc2tzIHVudGlsIGl0IHJlYWNoZXMgaXQncyBkZWZpbmUgc3RvcHBpbmcgcG9pbnQuIEZvciBleGFtcGxlOiAKCmBgYHtyfQpmb3IoaSBpbiAxOjUpeyAjIGZvciBsb29wcyBzdGFydCB3aXRoICJmb3IoIiBpbnNpZGUgdGhlIHBhcmVudGhlc2VzIGlzIHdoYXQgZGVmaW5lcyBpdCdzIGl0ZXJhdG9yICJpIiBhbmQgdGhlIHJhbmdlIHRvIG9wZXJhdGUgb246IDE6NS4gIAogIAogIHByaW50KDE6aSkgIyBUaGlzIHByaW50IHN0YXRlbWVudCB0ZWxscyB0aGUgY29tcHV0ZXIgd2hhdCB0byBkby4gU3BlY2lmaWNhbGx5LCBwcmludCAxOmkgCgp9IAoKYGBgCgpBbHRlcm5hdGl2ZWx5IHdlIGNvdWxkIGhhdmUgZG9uZSB0aGlzIGJ5IGhhbmQgbGlrZSBzbzogCmBgYHtyfQoKcHJpbnQoMToxKQpwcmludCgxOjIpCnByaW50KDE6MykKcHJpbnQoMTo0KQpwcmludCgxOjUpCgojYnV0IHRoaXMgbG9va3MgbXVjaCBuZWF0ZXIgYW5kIHNjYWxlcyAKZm9yKGkgaW4gMTo1KXsgCiAgcHJpbnQoMTppKSAKfSAKCmBgYAoKU28gd2hhdHMgZ29pbmcgb24gaGVyZT8gRmlyc3Qgd2UgZXN0YWJsaXNoIHRoZSByYW5nZSBvciBzY29wZSBvZiB0aGUgZm9yIGxvb3AuIFRoaXMgaXMgdGhlIGAgZm9yKGkgaW4gMTo1KSBgIHBhcnQuICAKCk5vdGUgdGhlIHVzZSBvZiB0aGUgYGlgIHZhcmlhYmxlIGhlcmUuIFRoaXMgdmFyaWFibGUgaXMgYXV0b21hdGljYWxseSBpbmNyZW1lbnRlZCBhZnRlciBlYWNoIGl0ZXJhdGlvbiBhbmQgaXRzZWxmIGtlZXBzIHRyYWNrIG9mIHRoZSBjdXJyZW50IHNwb3Qgb24gdGhlIGxvb3Agd2UgYXJlIGluLiBUaGUgbmFtZSBvZiB0aGlzIHZhcmlhYmxlIGRvZXNuJ3QgbWF0dGVyLCBidXQgZG9uJ3QgY2hvb3NlIGZ1bmN0aW9uIG5hbWVzIG9yIHZhcmlhYmxlIG5hbWVzIHRoYXQgaGF2ZSBhbHJlYWR5IGJlZW4gZGVmaW5lZC4KCmBgYHtyfQp4IDwtIDEwMApmb3IoeCBpbiAxOjUpeyAKICAKICBwcmludCgxOmkpIAoKfSAKCnggCmBgYApTZWUgYHhgIGhhcyBub3cgYmVlbiByZXBsYWNlZCB3aXRoIHRoZSB2YWx1ZSBvZiBgeGAgZnJvbSB0aGUgZm9yIGxvb3AuIElmIGB4YCB3YXMgZG9pbmcgc29tZXRoaW5nIGluIHlvdXIgY29kZSwgdGhlbiB0aGlzIGNvdWxkIGhhdmUgdW5kZXNpcmFibGUgcmVzdWx0cy4gSXQgZG9lc24ndCBtYXR0ZXIgd2hhdCB5b3UgbmFtZSB5b3VyIGxvb3BpbmcgdmFyaWFibGUsIGp1c3QgYXMgbG9uZyBhcyBpdCBkb2Vzbid0IGRpc3J1cHQgb3RoZXIgY29kZS4gWW91IGFyZW4ndCByZXN0cmljdGVkIHRvIHNpbmdsZSBjaGFyYWN0ZXIgdmFyaWFibGVzIGVpdGhlci4gSGVyZSB3ZSBjYW4gdXNlIHRoZSB3b3JkIGBGcmF1X0JsdWNoZXJgIGFzIHRoZSB2YXJpYWJsZS4gICAgCgpgYGB7cn0KCmZvcihGcmF1X0JsdWNoZXIgaW4gMTo1KXsgCiAgCiAgcHJpbnQoMTpGcmF1X0JsdWNoZXIgKSAKICAKfSAKCmBgYAoKQWxsIHRoYXQgc2FpZCBgaWAgaXMg</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBsb29wcyBhbmQgY29uZGl0aW9uYWxzIgpvdXRwdXQ6CiAgaHRtbF9ub3RlYm9vazogZGVmYXVsdAogIHBkZl9kb2N1bWVudDogZGVmYXVsdAotLS0KCiMjIEEgbm90ZSB0byB0aGUgcGVkYW50cyAKPGJyPiAgCgpZZXMsIEkga25vdyB0aGVyZSBhcmUgb2Z0ZW4gYmV0dGVyIHdheXMgdGhhbiBsb29wcyB0byBvcGVyYXRlIG9uIGRhdGEgc3RydWN0dXJlcyBpbiBgUmAsIGhvd2V2ZXIsIGxvb3Agc3ludGF4IGluIGBSYCBpcyBzaW1pbGFyIHRvIHN5bnRheCBpbiBvdGhlciBwcm9ncmFtbWluZyBsYW5ndWFnZXMgc28gSSBmaW5kIGl0IGJldHRlciB0byB0ZWFjaCB0aGUgdHJhbnNsYXRhYmxlIHRoaW5nIGZpcnN0LCB0aGVuIHRlYWNoIHRoZSB3ZWlyZCBgUmAgc3BlY2lmaWMgdm9vZG9vLiBBbHNvLCBieWUgRmVsaWNpYSEKCiMjIFIgTG9vcHMgYW5kIENvbmRpdGlvbmFscyAoQUtBIEZsb3cgQ29udHJvbCkKPGJyPiAgCk9uZSBvZiB0aGUgbW9zdCBjaGFsbGVuZ2luZyBhc3BlY3RzIG9mIGJpZyBkYXRhIGFuYWx5c2lzIGlzIHBlcmZvcm1pbmcgbWFueSBvcGVyYXRpb25zIG9uIGEgbGFyZ2UgZGF0YSBzZXQgaW4gc2VyaWVzLiBJbiB0aGVvcnkgdGhpcyBjYW4gYmUgZG9uZSwgaG93ZXZlciwgdGhlIGFtb3VudCBvZiB0aW1lIGFuZCBjb2RlIG5lZWRlZCB0byBhbmFseXplIHNvbWUgZGF0YSBzZXRzIGlzIHByb2hpYml0aXZlIChpLmUuLCBhIGRhdGEgZnJhbWUgd2l0aCAxIG1pbGxpb24gcm93cykuIEx1Y2tpbHksIG1vc3QgaWYgbm90IGFsbCBwcm9ncmFtbWluZyBsYW5ndWFnZXMgaGF2ZSBsb29wIGFuZCBjb25kaXRpb25hbCBzdHJ1Y3R1cmVzIHRoYXQgYWxsb3cgdXMgdG8gYXV0b21hdGUgdGhlIHByb2Nlc3MuIFdlIHdpbGwgYmVnaW4gd2l0aCBhIGRpc2N1c3Npb24gb24gdGhlIG1vc3QgY29tbW9uIGxvb3Agc3RydWN0dXJlcyBpbiBSIGFuZCB0aGVuIG1vdmUgb24gdG8gY29tbW9ubHkgdXNlZCBjb25kaXRpb25hbHMuIAoKIyMjIFIgTG9vcHMgb24gcmFuZ2VzCjxicj4KTWFueSB0aW1lcyBpbiBvdXIgZGF5LXRvLWRheSBhbmFseXNlcyB3ZSB3aWxsIG5lZWQgdG8gY29uZHVjdCBhIHRhc2sgc2V2ZXJhbCB0aW1lcy4gRm9yIGV4YW1wbGUsIGlmIHlvdSB3YW50IHRvIGRldGVybWluZSBpZiBhbiBBU1ZzIGluIGEgZGF0YSBzZXQgdmFyeSBhY3Jvc3MgdHJlYXRtZW50IGNvbmRpdGlvbnMgeW91IG1pZ2h0IHdhbnQgdG8gY29uZHVjdCBhIGxpbmVhciByZWdyZXNzaW9uIGZvciBlYWNoIGluZGl2aWR1YWwgQVNWIHZzIHRyZWF0bWVudC4gWW91IGNvdWxkIGRvIHRoZXNlIG9uZSBieSBvbmUgZWFjaCBnZXR0aW5nIGl0cyBvd24gbGluZSBvZiBjb2RlLiBIb3dldmVyLCB0aGlzIGFwcHJvYWNoIHF1aWNrbHkgYmVjb21lcyB1bm1hbmFnZWFibGUgd2hlbiB0aGUgbnVtYmVyIG9mIHRhc2tzIGdyb3dzIGJleW9uZCBhIGhhbmRmdWwuIEluIHRoaXMgc2l0dWF0aW9uIHdlIG5lZWQgYSB0b29sIHRoYXQgd2lsbCBoZWxwIGF1dG9tYXRlIHRoZXNlIHRhc2tzLiBQcm9iYWJseSB0aGUgbW9zdCBmbGV4aWJsZSBvcHRpb24gaXMgbG9vcHMuIAo8YnI+ICAKT25lIG9mIHRoZSBtb3N0IGNvbW1vbiBsb29wIHN0cnVjdHVyZXMgaW4gUiBpcyB0aGUgKioqZm9yKioqIGxvb3AuIFRoaXMgdHlwZSBvZiBmbG93IGNvbnRyb2wgd2lsbCBpdGVyYXRlIG92ZXIgYW4gb2JqZWN0IGl0IGlzIHByb3ZpZGVkIHByZWZvcm1pbmcgdGFza3MgdW50aWwgaXQgcmVhY2hlcyBpdCdzIGRlZmluZSBzdG9wcGluZyBwb2ludC4gRm9yIGV4YW1wbGU6IAoKYGBge3J9CmZvcihpIGluIDE6NSl7ICMgZm9yIGxvb3BzIHN0YXJ0IHdpdGggImZvcigiIGluc2lkZSB0aGUgcGFyZW50aGVzZXMgaXMgd2hhdCBkZWZpbmVzIGl0J3MgaXRlcmF0b3IgImkiIGFuZCB0aGUgcmFuZ2UgdG8gb3BlcmF0ZSBvbjogMTo1LiAgCiAgCiAgcHJpbnQoMTppKSAjIFRoaXMgcHJpbnQgc3RhdGVtZW50IHRlbGxzIHRoZSBjb21wdXRlciB3aGF0IHRvIGRvLiBTcGVjaWZpY2FsbHksIHByaW50IDE6aSAKCn0gCgpgYGAKCkFsdGVybmF0aXZlbHkgd2UgY291bGQgaGF2ZSBkb25lIHRoaXMgYnkgaGFuZCBsaWtlIHNvOiAKYGBge3J9CgpwcmludCgxOjEpCnByaW50KDE6MikKcHJpbnQoMTozKQpwcmludCgxOjQpCnByaW50KDE6NSkKCiNidXQgdGhpcyBsb29rcyBtdWNoIG5lYXRlciBhbmQgc2NhbGVzIApmb3IoaSBpbiAxOjUpeyAKICBwcmludCgxOmkpIAp9IAoKYGBgCgpTbyB3aGF0cyBnb2luZyBvbiBoZXJlPyBGaXJzdCB3ZSBlc3RhYmxpc2ggdGhlIHJhbmdlIG9yIHNjb3BlIG9mIHRoZSBmb3IgbG9vcC4gVGhpcyBpcyB0aGUgYCBmb3IoaSBpbiAxOjUpIGAgcGFydC4gIAoKTm90ZSB0aGUgdXNlIG9mIHRoZSBgaWAgdmFyaWFibGUgaGVyZS4gVGhpcyB2YXJpYWJsZSBpcyBhdXRvbWF0aWNhbGx5IGluY3JlbWVudGVkIGFmdGVyIGVhY2ggaXRlcmF0aW9uIGFuZCBpdHNlbGYga2VlcHMgdHJhY2sgb2YgdGhlIGN1cnJlbnQgc3BvdCBvbiB0aGUgbG9vcCB3ZSBhcmUgaW4uIFRoZSBuYW1lIG9mIHRoaXMgdmFyaWFibGUgZG9lc24ndCBtYXR0ZXIsIGJ1dCBkb24ndCBjaG9vc2UgZnVuY3Rpb24gbmFtZXMgb3IgdmFyaWFibGUgbmFtZXMgdGhhdCBoYXZlIGFscmVhZHkgYmVlbiBkZWZpbmVkLgoKYGBge3J9CnggPC0gMTAwCmZvcih4IGluIDE6NSl7IAogIAogIHByaW50KDE6aSkgCgp9IAoKeCAKYGBgClNlZSBgeGAgaGFzIG5vdyBiZWVuIHJlcGxhY2VkIHdpdGggdGhlIHZhbHVlIG9mIGB4YCBmcm9tIHRoZSBmb3IgbG9vcC4gSWYgYHhgIHdhcyBkb2luZyBzb21ldGhpbmcgaW4geW91ciBjb2RlLCB0aGVuIHRoaXMgY291bGQgaGF2ZSB1bmRlc2lyYWJsZSByZXN1bHRzLiBJdCBkb2Vzbid0IG1hdHRlciB3aGF0IHlvdSBuYW1lIHlvdXIgbG9vcGluZyB2YXJpYWJsZSwganVzdCBhcyBsb25nIGFzIGl0IGRvZXNuJ3QgZGlzcnVwdCBvdGhlciBjb2RlLiBZb3UgYXJlbid0IHJlc3RyaWN0ZWQgdG8gc2luZ2xlIGNoYXJhY3RlciB2YXJpYWJsZXMgZWl0aGVyLiBIZXJlIHdlIGNhbiB1c2UgdGhlIHdvcmQgYEZyYXVfQmx1Y2hlcmAgYXMgdGhlIHZhcmlhYmxlLiAgICAKCmBgYHtyfQoKZm9yKEZyYXVfQmx1Y2hlciBpbiAxOjUpeyAKICAKICBwcmludCgxOkZyYXVfQmx1Y2hlciApIAogIAp9IAoKYGBgCgpBbGwgdGhhdCBzYWlkIGBpYCBpcyBhIGNvbW1vbmx5IHVzZWQgdmFyaWFibGUuIElmIHRoZXJlIGFyZSBuZXN0ZWQgbG9vcCBzdHJ1Y3R1cmVzIHRoZW4gYGpgIGlzIGNvbW1vbmx5IHVzZWQgZm9yIHRoZSBzZWNvbmQgdmFyaWFibGUuIEZvciBleGFtcGxlLCBsZXQncyBzYXkgeW91ciBQSSBoYXMgdG9sZCB5b3UgdGhhdCB0aGV5IHdhbnQgYSBsaXN0IG9mIGFsbCBwb3NzaWJsZSBwYWlycyBvZiBwcmltZXJzIHlvdSBjb3VsZCB1c2UgZm9yIHNlcXVlbmNpbmcuICAKCmBgYHtyfQpteV9wcmltZXIxIDwtIGMoIkYxIiwgIkYyIiwgIkYzIiwgIkY0IikKbXlfcHJpbWVyMiA8LSBjKCJSMSIsICJSMiIsICJSMyIsICJSNCIpCgpmb3IoaSBpbiBteV9wcmltZXIxKXsKICBmb3IoaiBpbiBteV9wcmltZXIyKXsKICAgIHByaW50KHBhc3RlMChpLCAiOiIsIGogKSkKICB9Cn0KCmBgYCAKCk5lc3RlZCBsb29wIHdyaXRpbmcgY2FuIGdldCBjdW1iZXJzb21lIGFuZCBoYXJkIHRvIHJlYWQgc28gbGltaXRpbmcgaXQgdG8gYSBmZXcgc3VwZXJmaWNpYWwgbGV2ZWxzIChpLmUuLCBgaWAsIGFuZCBgamApIGlzIHVzdWFsbHkgYSBnb29kIGlkZWEuIFRha2UgYSBtaW51dGUgdG8gbG9vayBhdCwgYW5kIHVuZGVyc3RhbmQsIHdoYXRzIGdvaW5nIG9uIGhlcmUuIAoKIyMjIExvb3BzIHdpdGggZGF0YSBmcmFtZXMgYW5kIG1hdHJpY2VzCgpPZnRlbiBpbiBvdXIgd29yayB3ZSBhcmVuJ3Qgb3BlcmF0aW5nIG9uIHNpbXBsZSBsaXN0cyBvciB2ZWN0b3JzLCBidXQgb24gbW9yZSBjb21wbGljYXRlZCBkYXRhIHN0cnVjdHVyZXMgc3VjaCBhcyBkYXRhIGZyYW1lcyBhbmQgbWF0cmljZXMuIFdoZW4gd2Ugb3BlcmF0ZSBvbiB0aGVzZSBzdHJ1Y3R1cmVzIHRoZXJlIGFyZSBjZXJ0YWluIHRyaWNrcyB0aGF0IGNhbiBoZWxwIHVzLiBXZSB3aWxsIGxlYXJuIHNvbWUgb2YgdGhlc2UgdHJpY2tzIGhlcmUuIEZpcnN0IHdlIG5lZWQgdG8gZ2VuZXJhdGUgc29tZSBkYXRhLgoKYGBge3J9CnNldC5zZWVkKDczMSkgI3NldHRpbmcgYSBzZWVkIHdpbGwgaGVscCBnZW5lcmF0ZSByZXByb2R1Y2libGUgZGF0YSBmcm9tIGEgcmFuZG9tIGZ1bmN0aW9uCm15X21hdCA8LSBtYXRyaXgodHJ1bmMocm5vcm0oNTAsIG1lYW4gPTUwLCBzZCA9IDE1KSksIG5yb3cgPSA1LCBuY29sID0gMTApCgpteV9tYXQKCmBgYAoKTm93IGxldCdzIHNheSB3ZSB3YW50ZWQgdG8gZXZhbHVhdGUgYWxsIHRoZSByZWxhdGlvbnNoaXBzIGJldHdlZW4gcm93cyB3aXRoIGEgY29ycmVsYXRpb24gdGVzdC4gV2UgY2FuIHVzZSB0aGUgYG5yb3dgIGZ1bmN0aW9uIHRvIHByb3ZpZGUgaGVscCBwcm92aWRlIGEgcmFuZ2UgZm9yIHRoaXMgdGFzay4gCgpgYGB7cn0KZm9yKGkgaW4gMTpucm93KG15X21hdCkpewogIGZvcihqIGluIDE6bnJvdyhteV9tYXQpKXsKICAgIG15X2NvciA8LSBjb3IudGVzdChteV9tYXRbaSxdLG15X21hdFtqLF0pCiAgICBwcmludChteV9jb3IpCiAgfQp9CmBgYAoKQWZ0ZXIgeW91IHRha2UgdGhlc2UgZGF0YSB0byB5b3VyIFBJLCB0aGV5IGFzayB5b3UgdG8gcmVtb3ZlIGFsbCBvZiB0aGUgYXV0byBjb3JyZWxhdGlvbnMgKGkuZS4sIHJvdyAxIHdpdGggcm93IDEpLiBUbyBkbyB0aGlzIHRoZSBlYXN5IHdheSB3ZSB3aWxsIG5lZWQgdG8gbGV2ZXJhZ2UgYW5vdGhlciB0eXBlIG9mIGZsb3cgY29udHJvbCB1c2luZyBhbiBgaWZgIHN0YXRlbWVudC4gCgpUaGUgYGlmYCBzdGF0ZW1lbnQgZXZhbHVhdGVzIHdoZXRoZXIgeW91ciBxdWVyeSBpcyBgVFJVRWAgb3IgYEZBTFNFYC4gSW4gb3VyIGV4YW1wbGUgYWJvdmUgd2UgY291bGQgdXNlIGFuIGlmIHN0YXRlbWVudCB0byBzb2x2ZSBvdXIgcHJvYmxlbS4gCgoKYGBge3J9CmZvcihpIGluIDE6bnJvdyhteV9tYXQpKXsKICBmb3IoaiBpbiAxOm5yb3cobXlfbWF0KSl7CiAgICBpZihqID4gaSl7CiAgICBteV9jb3IgPC0gY29yLnRlc3QobXlfbWF0W2ksXSxteV9tYXRbaixdKQogICAgcHJpbnQobXlfY29yKQogICAgfQogIH0KfQpgYGAKTm8gbW9yZSBhdXRvCiMjIENvZGUKCkNvZGUgZm91bmQgaGVyZTogCgpodHRwczovL2dpdGh1Yi5jb20vY2hyaXNnYXVsa2Uvcl90cmFpbmluZ19nYXVsa2VfbGFiCg==</div>
 
 
 
