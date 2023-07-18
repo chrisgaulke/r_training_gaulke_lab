@@ -9,8 +9,7 @@ output:
 
 ## R Math
 
-R is, in fact, a fully functional programming language. It's primary uses are
-statistical and data analysis and data visualization. The ease of interface and massive library of statistical and big data analysis packages make R more suitable for day-to-day analysis than other languages such as ***Python*** which better at machine learning and web applications, ***Perl*** which is better for text parsing and data wrangling, and ***java*** which is better if you hate yourself.
+R is, in fact, a fully functional programming language. It's primary uses are statistical and data analysis and data visualization. The ease of interface and massive library of statistical and big data analysis packages make R more suitable for day-to-day analysis than other languages such as ***Python*** which better at machine learning and web applications, ***Perl*** which is better for text parsing and data wrangling, and ***java*** which is better if you hate yourself.
 
 Since R is for statistics and data analysis, learning about R mathematical operations is probably a good place to start. This lesson will focus on R math basics.
 
