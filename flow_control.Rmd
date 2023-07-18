@@ -1,0 +1,69 @@
+---
+title: "R loops and conditionals"
+output:
+  html_notebook: default
+  pdf_document: default
+---
+
+##R Loops and Conditionals (AKA Flow Control)
+<br>  
+One of the most challenging aspects of big data analysis is performing many operations on a large data set in series. In theory this can be done, however, the amount of time and code needed to analyze some data sets is prohibitive (i.e., a data frame with 1 million rows). Luckily, most if not all programming languages have loop and conditional structures that allow us to automate the process. We will begin with a discussion on the most common loop structures in R and then move on to commonly used conditionals. 
+
+### R Loops
+<br>
+Many times in our day-to-day analyses we will need to conduct a task several times. For example, if you want to determine if an ASVs in a data set vary across treatment conditions you might want to conduct a linear regression for each individual ASV vs treatment. You could do these one by one each getting its own line of code. However, this approach quickly becomes unmanageable when the number of tasks grows beyond a handful. In this situation we need a tool that will help automate these tasks. Probably the most flexible option is loops. 
+<br>  
+One of the most common loop structures in R is the ***for*** loop. This type of flow control will iterate over an object it is provided preforming tasks until it reaches it's define stopping point. For example: 
+
+```{r}
+for(i in 1:5){ # for loops start with "for(" inside the parentheses is what defines it's iterator "i" and the range to operate on: 1:5.  
+  
+  print(1:i) # This print statement tells the computer what to do. Specifically, print 1:i 
+
+} 
+
+```
+
+Alternatively we could have done this by hand like so: 
+```{r}
+
+print(1:1)
+print(1:2)
+print(1:3)
+print(1:4)
+print(1:5)
+
+#but this looks much neater and scales 
+for(i in 1:5){ 
+  print(1:i) 
+} 
+
+```
+
+So whats going on here? First we establish the range or scope of the for loop. This is the ` for(i in 1:5) ` part.  
+
+Note the use of the `i` variable here. This variable is automatically incremented after each iteration and itself keeps track of the current spot on the loop we are in. The name of this variable doesn't matter, but don't choose function names or variable names that have already been defined.
+
+```{r}
+x <- 100
+for(x in 1:5){ 
+  
+  print(1:i) 
+
+} 
+
+x 
+```
+See `x` has now been replaced with the value of `x` from the for loop. If `x` was doing something in your code, then this could have undesirable results. It doesn't matter what you name your looping variable, just as long as it doesn't disrupt other code. You aren't restricted to single character variables either. Here we can use the word `Frau_Blucher` as the variable.    
+
+```{r}
+
+for(Frau_Blucher in 1:5){ 
+  
+  print(1:Frau_Blucher ) 
+  
+} 
+
+```
+
+All that said `i` is 

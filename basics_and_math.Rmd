@@ -1,0 +1,280 @@
+---
+title: "R Basic Math"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  html_notebook: default
+---
+
+## R Math
+
+R is, in fact, a fully functional programming language. It's primary uses are
+statistical and data analysis and data visualization. The ease of interface and massive library of statistical and big data analysis packages make R more suitable for day-to-day analysis than other languages such as ***Python*** which better at machine learning and web applications, ***Perl*** which is better for text parsing and data wrangling, and ***java*** which is better if you hate yourself.
+
+Since R is for statistics and data analysis, learning about R mathematical operations is probably a good place to start. This lesson will focus on R math basics.
+
+#### Learning objectives
+
+1.  Understand the basic mathematical operands and their use in R
+    -   "+" , "-", "\*","/","%%","\^"\
+2.  Understand the use of common basic math functions in R
+    -   log(), sqrt(), ceiling(), floor(), trunc(), round(), abs()\
+3.  Understand how to summarize numeric data using common statistical functions
+    -   min(), max(), mean(), median(), sd(), fivenum(), table()\
+4.  Understand how object class impact mathematical operations
+    -   numeric, integer, complex, factor, character, logical
+    -   define binary operator and the arguments it accepts
+
+------------------------------------------------------------------------
+
+### The Basics
+
+<br>
+
+#### With numbers
+
+Let's start with some basic math operations.\
+<br>
+
+```{r}
+#addition
+
+2 + 2 
+
+#subtraction
+
+2 - 2 
+
+#multiplication
+
+2 * 2
+
+#division
+
+2 / 2 
+
+#division with decimal (float) result
+
+2 / 3 
+
+#division with remainder
+
+5 %% 2
+
+#exponent
+
+2^2
+
+```
+
+<br>\
+There is no need to calculate in serial: expressions can be chained and follow the standard rules of evaluation (parentheses, exponents, multiplication, division, addition, subtraction: "please excuse my dear aunt sally")
+
+```{r}
+(1+2)^2*5/5+2-1
+
+```
+
+------------------------------------------------------------------------
+
+#### With Variables
+
+These will work all work when numeric classed data is assigned to variables as well. For example:
+
+```{r}
+
+x <- 1 
+y <- 2
+z <- 5
+
+
+#addition
+
+x + y 
+x + 2
+
+#subtraction
+
+x - y 
+x - 2
+
+#multiplication
+
+y * z
+z * 2
+
+#division
+
+y / x 
+y / 1 
+
+#division with decimal (float) result
+
+z / y 
+z / 2
+
+#division with remainder
+
+z %% y
+z %% 2
+
+#exponent
+
+y^y
+y^2
+
+#Variables can be used in longer expressions and follow the same rules of evaluation
+(x+y)^y*z/z+y-x
+
+```
+
+------------------------------------------------------------------------
+
+### Useful Math Functions
+
+One of the major strengths of R is the huge number of base and community written mathematical functions available for free. We use most of these in one way or another on a daily basis, so these are good functions to remember.
+
+```{r}
+#log transforms 
+log(2.718282) # default is base e
+log(10,base = 2) # base can change
+log(10,base = 10) 
+
+#can be written like this as well (but better written as above)
+
+log2(2)
+log10(10)
+
+#No! Do not want! 
+
+log(-1) # Can't do log of negative here
+
+```
+
+Log transforms can be useful for stats and the log function is vectorized. A vectorized function will operate on all elements of a vector without needing to loop, which is far faster.
+
+```{r}
+
+log(c(2,4,8,16,32), base=2)
+
+```
+
+Another useful function is square root, which is also used to transform data that don't "respond" well to log transforms. By "respond" I mean aprroach normality.
+
+```{r}
+sqrt(x = 4)
+sqrt(x = -1) # can't take a square of a negative
+sqrt(c(2,4,8,16)) #also vectorized
+```
+
+As mentioned above, several mathematical functions have issues with negative numbers. Most programming languages have built in functions to deal with this. R is no exception.
+
+```{r}
+abs(x = -1)
+abs(c(-1,1,-2,-3)) #also vectorized
+```
+
+In a pinch if you can't remember this function it is simple to write a function or a simple line of code that will do this for you without the use of the function. **TRY THIS NOW**
+
+------------------------------------------------------------------------
+
+Good, now lets move on... Sometimes you have done some math but the precision (number of decimals) is a bit crazy. There are several numeric manipulations that can help with this issue.
+
+```{r}
+round(3.141593)
+round(3.141593, digits = 3)# control number of digits after decimal
+```
+
+But there are sometimes were we just want to round up (e.g., if we are estimating the maximum impact of something), round down, or simply do nothing. For these situations R has functions as well. **CHECK TO SEE IF ANY OF THESE FUNCTIONS ARE VECTORIZE NOW**
+
+```{r}
+ceiling(3.141593) # round up
+floor(3.141593) # round down  
+trunc(3.141593) # Just drop everything past decimal
+```
+
+------------------------------------------------------------------------
+
+### More useful math and statistical functions in R
+
+There are several functions that we use regularly in data analysis and statistics in R. Here we will look at a few that are the most important. Let's start by generating some random numbers to work with.
+
+```{r}
+
+v <- rnorm(n = 20, sd = 10, mean = 100) #generate a random list of 10 numbers with a defined mean and standard deviation using a normal distribution. 
+
+v # look at the numbers 
+
+v <- trunc(v) # to many decimals
+
+v
+```
+
+<br>
+
+Now lets generate some summary statistics about these numbers
+
+```{r}
+min(v) # get the minimum value 
+max(v) # get the maximum value 
+mean(v) # take the mean... What will this be? 
+median(v) # get the median
+sd(v) #calculate the standard deviation
+fivenum(v) # get five number statistics (min, max, median, 1st and 3rd quartile)
+table(v)
+```
+
+### Be sure to be classy
+
+It is important to be aware of the type of data you are operating on. Sometimes data class can be inadvertently altered during import or other operations. This can result in undesirable outcomes.
+
+```{r}
+x <- 10 
+y <- 2 
+
+class(x)
+class(y)
+
+x < y 
+x + y
+
+```
+
+Now look how it differs when
+
+```{r, error=TRUE}
+x <- "10"
+y <- "2"
+
+
+class(x)
+class(y)
+
+x < y 
+x + y
+
+
+```
+
+Now we get two strange results. **WHY IS x\<y?**. When in doubt check it out. There are several classes in R.
+
+```{r}
+
+class_n <- 1 # numeric
+class_i <- 1L # integer
+class_com <- 1i # complex
+class_chr <- "1" # character
+class_l <- TRUE # logical
+class_f <- factor("a") # factor
+
+class(class_n)
+class(class_i)
+class(class_com)
+class(class_chr)
+class(class_l)
+class(class_f)
+
+```
+
+For more info on using R notebooks and R markdown go here <https://evoldyn.gitlab.io/evomics-2018/ref-sheets/rmarkdown-cheatsheet-2.0.pdf> or use google.
