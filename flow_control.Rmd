@@ -53,7 +53,7 @@ Note the use of the `i` variable here. This variable is automatically incremente
 x <- 100
 for(x in 1:5){ 
   
-  print(1:i) 
+  print(1:x) 
 
 } 
 
@@ -125,7 +125,31 @@ for(i in 1:nrow(my_mat)){
   }
 }
 ```
-No more auto
+No more auto correlation
+
+### Example 
+
+Let's say we have blast report with the follow columns: query id, hit id, percent identity, length of alignment, bit score and we want to get all hits with percent ID > .2 and length > .2.
+
+```{r}
+set.seed(731)
+my_blast_report <- matrix(rnorm(n = 100, mean = 0, sd = .25),ncol = 5)
+colnames(my_blast_report) <- c("qid", "hid", "pid", "len_q", "bit")
+
+for(i in 1:nrow(my_blast_report)){
+  if(my_blast_report[i,"pid"] > .2){
+    if(my_blast_report[i,"len_q"] > .2){
+      print(paste0(my_blast_report[i, "qid"], ":", "optimal"))
+    } else if(my_blast_report[i,"len_q"] < -.2){
+      print(paste0(my_blast_report[i, "qid"], ":", "neg optimal"))
+    }
+  } 
+}
+```
+
+#```{r}
+#my_blast_report[which(my_blast_report[,"pid"] > .2 & my_blast_report[,"len_q"] > .2 ), #"qid"]
+#```
 ## Code
 
 Code found here: 
