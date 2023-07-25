@@ -1,0 +1,132 @@
+---
+title: "More Loops and Conditionals"
+output:
+  html_document:
+    df_print: paged
+---
+
+### Using multiple flow controls
+
+Loops can get really complicated really fast when depending on the complexity of your question. For example here is how to find the biggest thing in a simple data frame (in a really inefficient way). 
+
+```{r}
+
+loop.df <- data.frame(lets = LETTERS[1:5], 
+                      nums = c(10, 3, 36, 12 , 9))
+
+x <- NULL
+y <- NULL
+for(i in 1:nrow(loop.df)){
+  
+  if(is.null(x)){
+    x <- loop.df[i,1]
+    y <- loop.df[i,2]
+  }else{
+    if(y < loop.df[i,2]){
+      x <- loop.df[i,1]
+      y <- loop.df[i,2]
+    }
+  }  
+}
+
+x
+```
+
+Now for only odd numbers.
+
+```{r}
+
+loop.df <- data.frame(lets = LETTERS[1:5], 
+                      nums = c(10, 3, 36, 12 , 39))
+
+x <- NULL
+y <- NULL
+
+for(i in 1:nrow(loop.df)){
+      
+    if(loop.df[i,2] %% 2 != 0 ){
+      if(is.null(x)){
+        x <- loop.df[i,1]
+        y <- loop.df[i,2]
+      }else{ 
+        if(y < loop.df[i,2]){
+          x <- loop.df[i,1]
+          y <- loop.df[i,2]
+        } 
+    } 
+  }
+}
+
+x
+```
+Now for only odd numbers less than 30.
+
+```{r}
+
+loop.df <- data.frame(lets = LETTERS[1:5], 
+                      nums = c(10, 3, 36, 12 , 39))
+
+x <- NULL
+y <- NULL
+
+for(i in 1:nrow(loop.df)){
+    if(loop.df[i,2] > 30 ){
+      print("too big")
+      break
+    }  
+    if(loop.df[i,2] %% 2 != 0 ){
+      if(is.null(x)){
+        x <- loop.df[i,1]
+        y <- loop.df[i,2]
+      }else{ 
+        if(y < loop.df[i,2]){
+          x <- loop.df[i,1]
+          y <- loop.df[i,2]
+        } 
+    } 
+  }
+}
+
+x
+```
+
+Break can restrict the range and scope of loops
+
+***
+
+
+Just so you know a more efficient way of doing this for the first example
+```{r}
+
+loop.df <- data.frame(lets = LETTERS[1:5], 
+                      nums = c(10, 3, 36, 12 , 9))
+
+loop.df <- loop.df[order(loop.df$nums,decreasing = T),] # now reorder
+
+loop.df[1,1]
+
+```
+
+For the second example ... 
+
+```{r}
+
+loop.df <- data.frame(lets = LETTERS[1:5], 
+                      nums = c(10, 2, 36, 7 , 9))
+
+loop.df <- loop.df[which(loop.df$nums %% 2 != 0),]
+
+loop.df <- loop.df[order(loop.df$nums,decreasing = T),]
+
+loop.df[1,1]
+
+```
+This introduces a couple new pieces of syntax and a very important concept: reduce your problem into manageable sub-problems for which a efficient solution exists. Here we use the functions `which` and `order`. Both we have previously used in the context of manipulating data frames. This illustrates the point that sometimes a loop is not the best solution to your problem, particularly if you have a large amount of data.   
+
+
+
+#### Exercise 
+
+Select a blast/diamond report you have previously generated that has more than 100 hits. Get the first 100 hits in the report and save them to a new file. Then import this new file into R and ***using loops and conditionals*** find the overall best hit (regardless of query or sequence) in the file based off 1) percent ID, 2) bit score, 3) evalue (three seperate loops). Next design a loop that will 1) first check to ensure that the total length the alignment is at least 95% of the shorter sequence, then 2) return the best hit (percent ID) that passes this test.     
+
+

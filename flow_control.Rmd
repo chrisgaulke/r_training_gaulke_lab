@@ -1,8 +1,10 @@
 ---
 title: "R loops and conditionals"
 output:
-  html_notebook: default
+  html_document:
+    df_print: paged
   pdf_document: default
+  html_notebook: default
 ---
 
 ## A note to the pedants 
@@ -147,10 +149,7 @@ for(i in 1:nrow(my_blast_report)){
 }
 ```
 
-#```{r}
-#my_blast_report[which(my_blast_report[,"pid"] > .2 & my_blast_report[,"len_q"] > .2 ), #"qid"]
-#```
-## Code
+
 
 Code found here: 
 

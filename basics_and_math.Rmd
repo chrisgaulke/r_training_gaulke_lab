@@ -277,3 +277,8 @@ class(class_f)
 ```
 
 For more info on using R notebooks and R markdown go here <https://evoldyn.gitlab.io/evomics-2018/ref-sheets/rmarkdown-cheatsheet-2.0.pdf> or use google.
+
+Code for this exercise can be found here: 
+
+https://github.com/chrisgaulke/r_training_gaulke_lab
+
